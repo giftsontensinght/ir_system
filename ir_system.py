@@ -26,8 +26,11 @@ import porter
 from document import Document
 
 # Important paths:
-RAW_DATA_PATH = 'D:\sem2\ir\pt 02\ir24_pr_template_v1.4\raw_data'
-DATA_PATH = 'D:\sem2\ir\pt 02\ir24_pr_template_v1.4\data'
+
+# RAW_DATA_PATH = 'D:\sem2\ir\pt 02\ir24_pr_template_v1.4\raw_data'  ##ORIGINAL
+RAW_DATA_PATH = os.path.join('raw_data')
+# DATA_PATH = 'D:\sem2\ir\pt 02\ir24_pr_template_v1.4\data'  ##ORIGINAL
+DATA_PATH = os.path.join('data')
 COLLECTION_PATH = os.path.join(DATA_PATH, 'my_collection.json')
 STOPWORD_FILE_PATH = os.path.join(DATA_PATH, 'stopwords.json')
 
@@ -130,8 +133,8 @@ class InformationRetrievalSystem(object):
             elif action_choice == CHOICE_EXTRACT:
                 # Extract document collection from text file.
 
-                #raw_collection_file = os.path.join(RAW_DATA_PATH, r'aesopa10.txt')
-                self.collection = extraction.extract_collection(r'D:\sem2\ir\pt 02\ir24_pr_template_v1.4\raw_data\aesopa10.txt')
+                raw_collection_file = os.path.join(RAW_DATA_PATH, 'aesopa10.txt')
+                self.collection = extraction.extract_collection(raw_collection_file)
                 assert isinstance(self.collection, list)
                 assert all(isinstance(d, Document) for d in self.collection)
 
@@ -155,8 +158,8 @@ class InformationRetrievalSystem(object):
                 if method_choice in (SW_METHOD_LIST, SW_METHOD_CROUCH):
                     # Load stop words using the desired method:
                     if method_choice == SW_METHOD_LIST:
-                        # self.stop_word_list = cleanup.load_stop_word_list(os.path.join(RAW_DATA_PATH, 'englishST.txt'))
-                        self.stop_word_list = cleanup.load_stop_word_list(r'D:\sem2\ir\pt 02\ir24_pr_template_v1.4\raw_data\englishST.txt')
+                        self.stop_word_list = cleanup.load_stop_word_list(os.path.join(RAW_DATA_PATH, 'englishST.txt'))
+                        # self.stop_word_list = cleanup.load_stop_word_list(r'D:\sem2\ir\pt 02\ir24_pr_template_v1.4\raw_data\englishST.txt')
                         print('Done.\n')
                     elif method_choice == SW_METHOD_CROUCH:
                         self.stop_word_list = cleanup.create_stop_word_list_by_frequency(self.collection)
